@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - Гармония Тур</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Навигация -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-blue-600">Гармония Тур</h1>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Главная</a>
+                        <a href="profile.html" class="text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium">Профиль</a>
+                        <a href="cart.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium relative">
+                            Корзина
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Главная</a>
+                <a href="profile.html" class="text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Профиль</a>
+                <a href="cart.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Корзина</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-16">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Личный кабинет</h1>
+            <div class="flex items-center text-gray-600">
+                <i class="fas fa-user mr-2"></i>
+                <span>Добро пожаловать в ваш профиль</span>
+            </div>
+        </div>
+
+        <!-- Табы навигации -->
+        <div class="border-b border-gray-200 mb-10">
+            <div class="flex overflow-x-auto">
+                <button class="tab-button active" data-tab="profile-info">
+                    <i class="fas fa-id-card mr-2"></i>Личная информация
+                </button>
+                <button class="tab-button" data-tab="bookings">
+                    <i class="fas fa-ticket-alt mr-2"></i>История заказов
+                </button>
+                <button class="tab-button" data-tab="favorites">
+                    <i class="fas fa-heart mr-2"></i>Избранное
+                </button>
+                <button class="tab-button" data-tab="settings">
+                    <i class="fas fa-cog mr-2"></i>Настройки
+                </button>
+            </div>
+        </div>
+
+        <!-- Контент табов -->
+        <div id="profile-info" class="tab-content active">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1">
+                    <div class="profile-section text-center">
+                        <h2 class="text-xl font-bold text-gray-900 mb-6">Профиль пользователя</h2>
+                        <div class="profile-avatar mx-auto">
+                            <span id="user-avatar">А</span>
+                        </div>
+                        <h3 id="user-name" class="text-xl font-semibold text-gray-900 mt-4">Имя пользователя</h3>
+                        <p id="user-email" class="text-gray-600">email@example.com</p>
+                        <div class="mt-6 space-y-3">
+                            <button id="edit-profile-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md w-full font-semibold transition-colors duration-300">
+                                <i class="fas fa-edit mr-2"></i>Редактировать профиль
+                            </button>
+                            <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-md w-full font-semibold transition-colors duration-300">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Выйти из аккаунта
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-section text-center mt-8">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Статистика</h3>
+                        <div class="space-y-4 text-gray-600">
+                            <div>
+                                <i class="fas fa-calendar-check text-blue-500 mr-2"></i>
+                                <span id="bookings-count">0</span> заказов
+                            </div>
+                            <div>
+                                <i class="fas fa-heart text-red-500 mr-2"></i>
+                                <span id="favorites-count">0</span> в избранном
+                            </div>
+                            <div>
+                                <i class="fas fa-user-clock text-green-500 mr-2"></i>
+                                С нами с <span id="member-since">2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-2">
+                    <div class="profile-section">
+                        <h2 class="text-xl font-bold text-gray-900 mb-6">Личная информация</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Полное имя</label>
+                                <div id="display-name" class="text-gray-900 font-medium">Имя пользователя</div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <div id="display-email" class="text-gray-900 font-medium">email@example.com</div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
+                                <div id="display-phone" class="text-gray-900 font-medium">+7 (999) 123-45-67</div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Дата регистрации</label>
+                                <div id="display-registered" class="text-gray-900 font-medium">15 января 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-section mt-8">
+                        <h2 class="text-xl font-bold text-gray-900 mb-6">Дополнительная информация</h2>
+                        <p class="text-gray-600 mb-6">Добавьте дополнительную информацию о себе для более персонализированного опыта.</p>
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Дата рождения</label>
+                                    <div class="text-gray-500 italic">Не указана</div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Адрес</label>
+                                    <div class="text-gray-500 italic">Не указан</div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Предпочтения в путешествиях</label>
+                                <div class="text-gray-500 italic">Не указаны</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="bookings" class="tab-content">
+            <div class="profile-section">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">История заказов</h2>
+                <div id="bookings-list" class="space-y-6">
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-ticket-alt text-4xl mb-4 text-gray-400"></i>
+                        <p>У вас пока нет заказов</p>
+                        <a href="index.html" class="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
+                            <i class="fas fa-search mr-2"></i>Найти тур
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="favorites" class="tab-content">
+            <div class="profile-section">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Избранные туры</h2>
+                <div id="favorites-list" class="space-y-6">
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-heart text-4xl mb-4 text-gray-400"></i>
+                        <p>У вас пока нет избранных туров</p>
+                        <a href="index.html" class="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
+                            <i class="fas fa-search mr-2"></i>Найти тур
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="settings" class="tab-content">
+            <div class="profile-section">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">Настройки</h2>
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Уведомления</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-gray-700">Получать уведомления по email</label>
+                                </div>
+                                <div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="email-notifications" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-gray-700">Получать новостную рассылку</label>
+                                </div>
+                                <div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="newsletter" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-gray-700">Получать SMS-уведомления</label>
+                                </div>
+                                <div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="sms-alerts" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Конфиденциальность</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-gray-700">Скрыть личную информацию</label>
+                                    <p class="text-sm text-gray-500">Ваши данные не будут отображаться публично</p>
+                                </div>
+                                <div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="privacy-mode" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button id="save-settings-btn" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
+                            <i class="fas fa-save mr-2"></i>Сохранить настройки
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Гармония Тур</h3>
+                    <p class="text-gray-400">Ваш надежный партнер в мире путешествий</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Услуги</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Туры по России</li>
+                        <li>Зарубежные туры</li>
+                        <li>Экскурсии</li>
+                        <li>Отели</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i>+7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope mr-2"></i>info@harmony-tour.ru</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>Москва, ул. Примерная, 123</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Социальные сети</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-2xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-telegram text-2xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Гармония Тур. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно редактирования профиля -->
+    <div id="edit-profile-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Редактировать профиль</h3>
+                        <button id="close-edit-modal" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <form id="edit-profile-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Полное имя</label>
+                            <input type="text" id="edit-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="edit-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
+                            <input type="tel" id="edit-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" id="cancel-edit" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition-colors duration-300">
+                                Отмена
+                            </button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
+                                Сохранить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/tours.js"></script>
+    <script>
+        // Отображение информации о пользователе
+        function renderProfileInfo() {
+            if (!currentUser) return;
+            
+            document.getElementById('user-name').textContent = currentUser.name || 'Пользователь';
+            document.getElementById('user-email').textContent = currentUser.email || 'email@example.com';
+            document.getElementById('user-avatar').textContent = currentUser.avatar || currentUser.name?.charAt(0) || 'П';
+            
+            document.getElementById('display-name').textContent = currentUser.name || 'Не указано';
+            document.getElementById('display-email').textContent = currentUser.email || 'Не указано';
+            document.getElementById('display-phone').textContent = currentUser.phone || 'Не указано';
+            document.getElementById('display-registered').textContent = formatDate(currentUser.memberSince) || 'Не указано';
+            
+            document.getElementById('member-since').textContent = new Date(currentUser.memberSince).getFullYear() || '2023';
+            
+            // Настройка переключателей уведомлений
+            document.getElementById('email-notifications').checked = currentUser.preferences?.notifications || false;
+            document.getElementById('newsletter').checked = currentUser.preferences?.newsletter || false;
+            document.getElementById('sms-alerts').checked = currentUser.preferences?.smsAlerts || false;
+        }
+        
+        // Отображение истории заказов
+        function renderBookingHistory() {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const bookingsList = document.getElementById('bookings-list');
+            if (!bookingsList) return;
+            
+            document.getElementById('bookings-count').textContent = orders.length;
+            
+            if (orders.length === 0) return;
+            
+            bookingsList.innerHTML = orders.map(order => `
+                <div class="border rounded-lg overflow-hidden border-gray-200">
+                    <div class="bg-gray-50 p-4 flex flex-col md:flex-row md:items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Заказ №${order.id}</h3>
+                            <p class="text-gray-600 text-sm">Дата: ${formatDate(order.date)}</p>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            <span class="inline-block px-2 py-1 text-xs font-medium rounded-full 
+                                ${order.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                                  order.status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">
+                                ${order.status === 'completed' ? 'Завершен' : 
+                                  order.status === 'cancelled' ? 'Отменен' : 'В обработке'}
+                            </span>
+                            <div class="text-lg font-bold text-gray-900 mt-1">${formatPrice(order.total)}</div>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        ${order.items.map(item => `
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h4 class="font-medium">${item.name}</h4>
+                                    <p class="text-sm text-gray-500">${item.duration}</p>
+                                </div>
+                                <div class="text-right">
+                                    <div>${formatPrice(item.price)}</div>
+                                    <div class="text-sm text-gray-500">x${item.quantity}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="bg-gray-50 p-3 border-t border-gray-200 text-right">
+                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium" onclick="showOrderDetails('${order.id}')">
+                            <i class="fas fa-eye mr-1"></i>Подробности заказа
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Отображение избранных туров
+        function renderFavorites() {
+            // Для демонстрации, так как у нас нет системы избранного
+            const favoritesList = document.getElementById('favorites-list');
+            if (!favoritesList) return;
+            
+            const popularTours = getPopularTours(3);
+            favoritesList.innerHTML = `
+                <div class="text-center py-6 text-gray-500">
+                    <i class="fas fa-heart text-4xl mb-4 text-gray-400"></i>
+                    <p>У вас пока нет избранных туров</p>
+                    <p class="text-sm">Вот несколько популярных направлений, которые могут вам понравиться:</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    ${popularTours.map(tour => createTourCard(tour)).join('')}
+                </div>
+            `;
+            
+            document.getElementById('favorites-count').textContent = 0;
+            
+            setupTourCardEvents();
+        }
+        
+        // Показ деталей заказа
+        function showOrderDetails(orderId) {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const modal = document.getElementById('tour-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-content');
+            
+            if (!modal || !modalTitle || !modalContent) return;
+            
+            modalTitle.textContent = `Заказ №${order.id}`;
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <h4 class="font-semibold">Дата заказа</h4>
+                                <p class="text-gray-600">${formatDate(order.date)}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Статус</h4>
+                                <p class="text-gray-600">
+                                    <span class="inline-block px-2 py-1 text-xs font-medium rounded-full 
+                                        ${order.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                                          order.status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">
+                                        ${order.status === 'completed' ? 'Завершен' : 
+                                          order.status === 'cancelled' ? 'Отменен' : 'В обработке'}
+                                    </span>
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Итого</h4>
+                                <p class="text-gray-600 font-bold text-xl">${formatPrice(order.total)}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-lg mb-3">Состав заказа</h4>
+                        <div class="space-y-4 border-l-4 border-blue-500 pl-3">
+                            ${order.items.map((item, index) => `
+                                <div class="border-b border-gray-200 pb-3">
+                                    <div class="flex justify-between">
+                                        <h5 class="font-medium">${index + 1}. ${item.name}</h5>
+                                        <div class="font-medium">${formatPrice(item.price * item.quantity)}</div>
+                                    </div>
+                                    <div class="text-sm text-gray-600">
+                                        <div>Стоимость за одного: ${formatPrice(item.price)}</div>
+                                        <div>Количество участников: ${item.quantity}</div>
+                                        <div>Продолжительность: ${item.duration}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-lg mb-3">Информация о заказчике</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-sm text-gray-500">Имя</div>
+                                <div class="font-medium">${order.customer?.name || 'Гость'}</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500">Email</div>
+                                <div class="font-medium">${order.customer?.email || 'Не указан'}</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500">Телефон</div>
+                                <div class="font-medium">${order.customer?.phone || 'Не указан'}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 border border-yellow-100 p-4 rounded-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-yellow-600 text-xl mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-semibold text-yellow-800">Примечание</h4>
+                                <p class="text-yellow-700">Это демонстрационный заказ. В реальном приложении вы бы получили подтверждение на email и дальнейшие инструкции от менеджера.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+        
+        // Настройка модального окна редактирования
+        function setupEditProfileModal() {
+            const editBtn = document.getElementById('edit-profile-btn');
+            const modal = document.getElementById('edit-profile-modal');
+            const closeBtn = document.getElementById('close-edit-modal');
+            const cancelBtn = document.getElementById('cancel-edit');
+            const form = document.getElementById('edit-profile-form');
+            
+            if (editBtn && modal && closeBtn && cancelBtn && form) {
+                editBtn.addEventListener('click', function() {
+                    // Заполняем форму текущими данными
+                    document.getElementById('edit-name').value = currentUser?.name || '';
+                    document.getElementById('edit-email').value = currentUser?.email || '';
+                    document.getElementById('edit-phone').value = currentUser?.phone || '';
+                    
+                    modal.classList.remove('hidden');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                });
+                
+                cancelBtn.addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                });
+                
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+                
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Обновляем данные пользователя
+                    currentUser.name = document.getElementById('edit-name').value;
+                    currentUser.email = document.getElementById('edit-email').value;
+                    currentUser.phone = document.getElementById('edit-phone').value;
+                    currentUser.avatar = currentUser.name.charAt(0);
+                    
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    renderProfileInfo();
+                    modal.classList.add('hidden');
+                    
+                    showNotification('Данные профиля обновлены', 'success');
+                });
+            }
+        }
+        
+        // Настройка сохранения настроек
+        function setupSettingsSave() {
+            const saveBtn = document.getElementById('save-settings-btn');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', function() {
+                    if (!currentUser.preferences) {
+                        currentUser.preferences = {};
+                    }
+                    
+                    currentUser.preferences.notifications = document.getElementById('email-notifications').checked;
+                    currentUser.preferences.newsletter = document.getElementById('newsletter').checked;
+                    currentUser.preferences.smsAlerts = document.getElementById('sms-alerts').checked;
+                    
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    showNotification('Настройки сохранены', 'success');
+                });
+            }
+        }
+        
+        // Настройка выхода из аккаунта
+        function setupLogout() {
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    logoutUser();
+                });
+            }
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEditProfileModal();
+            setupSettingsSave();
+            setupLogout();
+        });
+    </script>
+</body>
+</html>

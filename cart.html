@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - Гармония Тур</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Навигация -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-blue-600">Гармония Тур</h1>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Главная</a>
+                        <a href="profile.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Профиль</a>
+                        <a href="cart.html" class="text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium relative">
+                            Корзина
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Главная</a>
+                <a href="profile.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Профиль</a>
+                <a href="cart.html" class="text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Корзина</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-16">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Ваша корзина</h1>
+            <div class="flex items-center text-gray-600">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                <span>Просмотрите и оформите выбранные туры</span>
+            </div>
+        </div>
+
+        <div id="cart-empty-message" class="hidden bg-white rounded-lg p-8 text-center shadow-md">
+            <i class="fas fa-shopping-cart text-5xl text-gray-400 mb-6"></i>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-2">Ваша корзина пуста</h2>
+            <p class="text-gray-600 mb-6">Вы пока не добавили ни одного тура в корзину.</p>
+            <a href="index.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
+                <i class="fas fa-search mr-2"></i>Найти туры
+            </a>
+        </div>
+
+        <div id="cart-content" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2">
+                <div id="cart-items" class="space-y-4">
+                    <!-- Элементы корзины будут добавлены через JavaScript -->
+                </div>
+                
+                <div class="flex justify-between mt-6">
+                    <button id="clear-cart-btn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors duration-300">
+                        <i class="fas fa-trash mr-2"></i>Очистить корзину
+                    </button>
+                    <a href="index.html" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition-colors duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Продолжить поиск туров
+                    </a>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Итог заказа</h2>
+                    
+                    <div class="space-y-4 border-b border-gray-200 pb-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Подитог:</span>
+                            <span id="cart-subtotal" class="font-medium">0 ₽</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Скидка:</span>
+                            <span id="cart-discount" class="font-medium text-green-600">0 ₽</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Сервисный сбор:</span>
+                            <span id="cart-fee" class="font-medium">0 ₽</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <div class="flex justify-between text-lg font-bold text-gray-900 mb-6">
+                            <span>Итого:</span>
+                            <span id="cart-total">0 ₽</span>
+                        </div>
+                        
+                        <button id="checkout-btn" class="w-full bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300 mb-3">
+                            <i class="fas fa-credit-card mr-2"></i>Оформить заказ
+                        </button>
+                        
+                        <p class="text-xs text-gray-500 text-center">Нажимая кнопку, вы соглашаетесь с условиями бронирования</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Промокод</h3>
+                    <div class="flex space-x-2">
+                        <input type="text" id="promo-code" placeholder="Введите код" class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="apply-promo-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-300">
+                            <i class="fas fa-tag"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Введите промокод для получения скидки</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Гармония Тур</h3>
+                    <p class="text-gray-400">Ваш надежный партнер в мире путешествий</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Услуги</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Туры по России</li>
+                        <li>Зарубежные туры</li>
+                        <li>Экскурсии</li>
+                        <li>Отели</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i>+7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope mr-2"></i>info@harmony-tour.ru</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>Москва, ул. Примерная, 123</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Социальные сети</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-2xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-telegram text-2xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Гармония Тур. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно оформления заказа -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Оформление заказа</h3>
+                        <button id="close-checkout-modal" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <form id="checkout-form" class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-4">1. Контактная информация</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Имя</label>
+                                    <input type="text" id="checkout-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Фамилия</label>
+                                    <input type="text" id="checkout-surname" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="checkout-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
+                                    <input type="tel" id="checkout-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-lg mb-4">2. Способ оплаты</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <input type="radio" id="payment-card" name="payment-method" value="card" class="mr-2" checked>
+                                    <label for="payment-card" class="flex-1 flex items-center justify-between cursor-pointer">
+                                        <span>Кредитная/дебетовая карта</span>
+                                        <span class="text-gray-500 text-sm">Visa, MasterCard, Мир</span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="payment-bank" name="payment-method" value="bank" class="mr-2">
+                                    <label for="payment-bank" class="flex-1 flex items-center justify-between cursor-pointer">
+                                        <span>Банковский перевод</span>
+                                        <span class="text-gray-500 text-sm">Через СБП</span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="payment-installments" name="payment-method" value="installments" class="mr-2">
+                                    <label for="payment-installments" class="flex-1 flex items-center justify-between cursor-pointer">
+                                        <span>Оплата в рассрочку</span>
+                                        <span class="text-gray-500 text-sm">Без процентов</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div id="card-details" class="mt-4 space-y-3 border border-gray-200 rounded-lg p-4">
+                                <p class="text-gray-600 text-sm mb-3">Для демонстрации вы можете ввести тестовые данные карты. Реальные платежи не обрабатываются.</p>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Номер карты</label>
+                                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Срок действия</label>
+                                        <input type="text" id="card-expiry" placeholder="MM/YY" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">CVC/CVV</label>
+                                        <input type="text" id="card-cvc" placeholder="123" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-lg mb-4">3. Итог заказа</h4>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <div class="space-y-3 border-b border-gray-200 pb-3 mb-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Подитог:</span>
+                                        <span id="checkout-subtotal" class="font-medium">0 ₽</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Скидка:</span>
+                                        <span id="checkout-discount" class="font-medium text-green-600">0 ₽</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Сервисный сбор:</span>
+                                        <span id="checkout-fee" class="font-medium">0 ₽</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between text-lg font-bold text-gray-900">
+                                    <span>Итого к оплате:</span>
+                                    <span id="checkout-total">0 ₽</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-lg mb-4">4. Подтверждение</h4>
+                            <div class="flex items-start">
+                                <input type="checkbox" id="terms-agreement" class="mt-1 mr-3" required>
+                                <label for="terms-agreement" class="text-gray-700 text-sm">Я подтверждаю, что прочитал и согласен с <a href="#" class="text-blue-600 hover:underline">условиями бронирования</a> и <a href="#" class="text-blue-600 hover:underline">политикой конфиденциальности</a>.</label>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <button type="button" id="cancel-checkout" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition-colors duration-300">
+                                Отмена
+                            </button>
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
+                                <i class="fas fa-check mr-2"></i>Подтвердить и оплатить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/tours.js"></script>
+    <script>
+        // Отображение элементов корзины
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('cart-empty-message');
+            const cartContent = document.getElementById('cart-content');
+            
+            if (!cartItemsContainer || !emptyCartMessage || !cartContent) return;
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartContent.classList.add('hidden');
+                return;
+            }
+            
+            emptyCartMessage.classList.add('hidden');
+            cartContent.classList.remove('hidden');
+            
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">${item.name}</h3>
+                            <p class="text-gray-600">${item.shortDescription || item.duration}</p>
+                        </div>
+                        <div class="mt-2 md:mt-0 text-right">
+                            <div class="text-lg font-bold text-gray-900">${formatPrice(item.price * item.quantity)}</div>
+                            <div class="text-sm text-gray-500">${formatPrice(item.price)} x ${item.quantity}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div class="flex items-center quantity-controls">
+                            <span class="text-gray-700 mr-3">Количество участников:</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="text-gray-900 font-medium">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <button class="mt-3 md:mt-0 text-red-600 hover:text-red-800" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-trash mr-1"></i>Удалить
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateCartSummary();
+        }
+        
+        // Обновление итогов корзины
+        function updateCartSummary() {
+            const subtotal = getCartTotal();
+            const discount = 0; // Для демонстрации
+            const fee = 0; // Для демонстрации
+            const total = subtotal - discount + fee;
+            
+            document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('cart-discount').textContent = formatPrice(discount);
+            document.getElementById('cart-fee').textContent = formatPrice(fee);
+            document.getElementById('cart-total').textContent = formatPrice(total);
+            
+            // Обновляем данные в модальном окне оформления
+            document.getElementById('checkout-subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('checkout-discount').textContent = formatPrice(discount);
+            document.getElementById('checkout-fee').textContent = formatPrice(fee);
+            document.getElementById('checkout-total').textContent = formatPrice(total);
+        }
+        
+        // Настройка кнопки очистки корзины
+        function setupClearCartButton() {
+            const clearBtn = document.getElementById('clear-cart-btn');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    if (confirm('Вы уверены, что хотите очистить корзину? Все добавленные туры будут удалены.')) {
+                        clearCart();
+                    }
+                });
+            }
+        }
+        
+        // Настройка модального окна оформления заказа
+        function setupCheckoutModal() {
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const modal = document.getElementById('checkout-modal');
+            const closeBtn = document.getElementById('close-checkout-modal');
+            const cancelBtn = document.getElementById('cancel-checkout');
+            
+            if (checkoutBtn && modal && closeBtn && cancelBtn) {
+                checkoutBtn.addEventListener('click', function() {
+                    if (cart.length === 0) {
+                        showNotification('Корзина пуста! Добавьте туры перед оформлением заказа.', 'error');
+                        return;
+                    }
+                    
+                    // Заполняем форму данными пользователя, если они есть
+                    if (currentUser) {
+                        document.getElementById('checkout-name').value = currentUser.name?.split(' ')[0] || '';
+                        document.getElementById('checkout-surname').value = currentUser.name?.split(' ')[1] || '';
+                        document.getElementById('checkout-email').value = currentUser.email || '';
+                        document.getElementById('checkout-phone').value = currentUser.phone || '';
+                    }
+                    
+                    modal.classList.remove('hidden');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                });
+                
+                cancelBtn.addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                });
+                
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            }
+        }
+        
+        // Настройка переключения способов оплаты
+        function setupPaymentMethods() {
+            const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+            const cardDetails = document.getElementById('card-details');
+            
+            if (paymentMethods && cardDetails) {
+                paymentMethods.forEach(method => {
+                    method.addEventListener('change', function() {
+                        if (this.value === 'card') {
+                            cardDetails.classList.remove('hidden');
+                        } else {
+                            cardDetails.classList.add('hidden');
+                        }
+                    });
+                });
+            }
+        }
+        
+        // Настройка применения промокода
+        function setupPromoCode() {
+            const applyBtn = document.getElementById('apply-promo-btn');
+            if (applyBtn) {
+                applyBtn.addEventListener('click', function() {
+                    const promoCode = document.getElementById('promo-code').value;
+                    if (promoCode) {
+                        showNotification('Промокод применен! Для демонстрации скидка не начисляется.', 'success');
+                    } else {
+                        showNotification('Пожалуйста, введите промокод', 'error');
+                    }
+                });
+            }
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCartItems();
+            setupClearCartButton();
+            setupCheckoutModal();
+            setupPaymentMethods();
+            setupPromoCode();
+        });
+    </script>
+</body>
+</html>
