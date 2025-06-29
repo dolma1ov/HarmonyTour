@@ -402,12 +402,48 @@ function initializeCartPage() {
         renderCartItems();
     }
     setupCheckoutForm();
+    setupCheckoutModalEvents();
 }
 
 function setupCheckoutForm() {
     const checkoutForm = document.getElementById('checkout-form');
     if (checkoutForm) {
         checkoutForm.addEventListener('submit', handleCheckout);
+    }
+}
+
+function setupCheckoutModalEvents() {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const checkoutModal = document.getElementById('checkout-modal');
+    const closeCheckoutModal = document.getElementById('close-checkout-modal');
+    const cancelCheckout = document.getElementById('cancel-checkout');
+
+    if (checkoutBtn && checkoutModal) {
+        checkoutBtn.addEventListener('click', function() {
+            checkoutModal.classList.remove('hidden');
+            document.body.classList.add('modal-open');
+        });
+    }
+    if (closeCheckoutModal && checkoutModal) {
+        closeCheckoutModal.addEventListener('click', function() {
+            checkoutModal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        });
+    }
+    if (cancelCheckout && checkoutModal) {
+        cancelCheckout.addEventListener('click', function() {
+            checkoutModal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        });
+    }
+    // Закрытие по клику вне окна
+    if (checkoutModal) {
+        checkoutModal.addEventListener('click', function(e) {
+            if (e.target === checkoutModal) {
+                checkoutModal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            }
+        });
     }
 }
 
@@ -432,6 +468,12 @@ function handleCheckout(e) {
     showNotification('Оплата прошла успешно!', 'success');
     if (typeof renderCartItems === 'function') {
         renderCartItems();
+    }
+    // Закрыть модальное окно после оплаты
+    const checkoutModal = document.getElementById('checkout-modal');
+    if (checkoutModal) {
+        checkoutModal.classList.add('hidden');
+        document.body.classList.remove('modal-open');
     }
 }
 
