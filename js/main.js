@@ -607,8 +607,16 @@ function renderCartItems() {
 }
 
 function addToFavorites(tourId) {
-    const tour = window.tours.find(t => t.id === tourId);
-    if (!tour) return;
+    // Получаем тур из разных возможных источников
+    let tour = null;
+    if (window.tours && window.tours.length > 0) {
+        tour = window.tours.find(t => t.id === tourId);
+    }
+    
+    if (!tour) {
+        showNotification('Тур не найден!', 'error');
+        return;
+    }
 
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const existingItem = favorites.find(item => item.id === tourId);
@@ -669,7 +677,7 @@ function renderFavorites() {
                     <div class="text-lg font-bold text-gray-900 mb-2">${formatPrice(tour.price)}</div>
                     <div class="flex space-x-2">
                         <button onclick="showTourDetails(${tour.id})" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-300">
-                            <i class="fas fa-eye mr-1"></i>Подробнее
+                            <i class="fas fa-external-link-alt mr-1"></i>Перейти к туру
                         </button>
                         <button onclick="removeFromFavorites(${tour.id})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors duration-300">
                             <i class="fas fa-trash mr-1"></i>Удалить
@@ -685,6 +693,7 @@ if (typeof window !== 'undefined') {
     window.addToCart = addToCart;
     window.addToFavorites = addToFavorites;
     window.removeFromFavorites = removeFromFavorites;
+    window.formatPrice = formatPrice;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
