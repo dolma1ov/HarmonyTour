@@ -1,13 +1,7 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-let tours = [];
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Инициализация туров из tours.js
-    if (typeof window !== 'undefined' && window.tours) {
-        tours = window.tours;
-    }
-    
     initializeApp();
     updateCartCount();
     setupEventListeners();
@@ -161,8 +155,7 @@ function debounce(func, wait) {
 }
 
 function addToCart(tourId) {
-    const toursArray = window.tours || tours;
-    const tour = toursArray.find(t => t.id === tourId);
+    const tour = window.tours.find(t => t.id === tourId);
     if (!tour) return;
 
     const existingItem = cart.find(item => item.id === tourId);
@@ -614,8 +607,7 @@ function renderCartItems() {
 }
 
 function addToFavorites(tourId) {
-    const toursArray = window.tours || tours;
-    const tour = toursArray.find(t => t.id === tourId);
+    const tour = window.tours.find(t => t.id === tourId);
     if (!tour) return;
 
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
