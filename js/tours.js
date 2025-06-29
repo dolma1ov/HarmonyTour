@@ -322,6 +322,10 @@ function showTourDetails(tourId) {
                         class="flex-1 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
                     <i class="fas fa-shopping-cart mr-2"></i>Добавить в корзину
                 </button>
+                <button onclick="addToFavorites(${tour.id}); document.getElementById('tour-modal').classList.add('hidden'); document.body.classList.remove('modal-open');" 
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
+                    <i class="fas fa-heart mr-2"></i>В избранное
+                </button>
             </div>
         </div>
     `;
@@ -396,6 +400,7 @@ function getToursByCategory(category) {
 if (typeof window !== 'undefined') {
     window.showTourDetails = showTourDetails;
     window.addToCart = typeof addToCart !== 'undefined' ? addToCart : () => {};
+    window.tours = tours;
 }
 
 if (typeof module !== 'undefined' && module.exports) {

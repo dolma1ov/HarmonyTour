@@ -1,7 +1,18 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+let tours = [];
+
+// Импорт туров из tours.js
+if (typeof window !== 'undefined' && window.tours) {
+    tours = window.tours;
+}
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация туров
+    if (typeof window !== 'undefined' && window.tours) {
+        tours = window.tours;
+    }
+    
     initializeApp();
     updateCartCount();
     setupEventListeners();
@@ -288,6 +299,7 @@ function initializeProfilePage() {
     }
     updateProfileDisplay();
     renderBookingHistory();
+    renderFavorites();
     setupProfileTabs();
     setupProfileEvents();
 }
@@ -605,8 +617,85 @@ function renderCartItems() {
     if (totalElem) totalElem.textContent = formatPrice(total);
 }
 
+function addToFavorites(tourId) {
+    const tour = tours.find(t => t.id === tourId);
+    if (!tour) return;
+
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const existingItem = favorites.find(item => item.id === tourId);
+    
+    if (existingItem) {
+        showNotification(`Тур "${tour.name}" уже в избранном!`, 'info');
+        return;
+    }
+    
+    favorites.push({
+        ...tour,
+        addedAt: new Date().toISOString()
+    });
+    
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    showNotification(`Тур "${tour.name}" добавлен в избранное!`, 'success');
+}
+
+function removeFromFavorites(tourId) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favorites = favorites.filter(item => item.id !== tourId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    
+    if (typeof renderFavorites === 'function') {
+        renderFavorites();
+    }
+}
+
+function renderFavorites() {
+    const favoritesList = document.getElementById('favorites-list');
+    if (!favoritesList) return;
+    
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+    if (favorites.length === 0) {
+        favoritesList.innerHTML = `<div class="text-center py-12 text-gray-500">
+            <i class="fas fa-heart text-4xl mb-4 text-gray-400"></i>
+            <p>У вас пока нет избранных туров</p>
+            <a href="index.html" class="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
+                <i class="fas fa-search mr-2"></i>Найти тур
+            </a>
+        </div>`;
+        document.getElementById('favorites-count').textContent = 0;
+        return;
+    }
+    
+    document.getElementById('favorites-count').textContent = favorites.length;
+    favoritesList.innerHTML = favorites.map(tour => `
+        <div class="border rounded-lg overflow-hidden border-gray-200">
+            <div class="bg-gray-50 p-4 flex flex-col md:flex-row md:items-center justify-between">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-lg text-gray-900 mb-1">${tour.name}</h3>
+                    <div class="text-gray-500 text-sm mb-1">${tour.duration}</div>
+                    <div class="text-gray-500 text-sm mb-1">Категория: ${tour.category}</div>
+                    <div class="text-gray-500 text-sm">Цена: ${formatPrice(tour.price)}</div>
+                </div>
+                <div class="flex flex-col items-end mt-4 md:mt-0">
+                    <div class="text-lg font-bold text-gray-900 mb-2">${formatPrice(tour.price)}</div>
+                    <div class="flex space-x-2">
+                        <button onclick="showTourDetails(${tour.id})" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-300">
+                            <i class="fas fa-eye mr-1"></i>Подробнее
+                        </button>
+                        <button onclick="removeFromFavorites(${tour.id})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors duration-300">
+                            <i class="fas fa-trash mr-1"></i>Удалить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
 if (typeof window !== 'undefined') {
     window.addToCart = addToCart;
+    window.addToFavorites = addToFavorites;
+    window.removeFromFavorites = removeFromFavorites;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
