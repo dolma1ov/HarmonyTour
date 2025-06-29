@@ -50,11 +50,20 @@ function setupEventListeners() {
     if (closeModal && modal) {
         closeModal.addEventListener('click', function() {
             modal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
         });
         
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 modal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
             }
         });
     }

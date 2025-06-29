@@ -318,7 +318,7 @@ function showTourDetails(tourId) {
             </div>
             
             <div class="flex space-x-4 pt-4 border-t">
-                <button onclick="addToCart(${tour.id}); document.getElementById('tour-modal').classList.add('hidden');" 
+                <button onclick="addToCart(${tour.id}); document.getElementById('tour-modal').classList.add('hidden'); document.body.classList.remove('modal-open');" 
                         class="flex-1 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
                     <i class="fas fa-shopping-cart mr-2"></i>Добавить в корзину
                 </button>
@@ -327,6 +327,7 @@ function showTourDetails(tourId) {
     `;
     
     modal.classList.remove('hidden');
+    document.body.classList.add('modal-open');
 }
 
 function filterTours(destination, priceFrom, priceTo) {
