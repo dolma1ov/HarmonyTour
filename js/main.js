@@ -447,6 +447,27 @@ function setupCheckoutModalEvents() {
     }
 }
 
+function saveOrder(orderNumber, orderData) {
+    if (!currentUser) return;
+    if (!currentUser.bookings) {
+        currentUser.bookings = [];
+    }
+    // Добавить заказ в профиль пользователя
+    currentUser.bookings.push(orderData);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    // Добавить заказ в глобальный массив orders
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push({
+        ...orderData,
+        user: {
+            name: currentUser.name,
+            email: currentUser.email,
+            phone: currentUser.phone
+        }
+    });
+    localStorage.setItem('orders', JSON.stringify(orders));
+}
+
 function handleCheckout(e) {
     e.preventDefault();
     const orderNumber = generateOrderNumber();
@@ -463,7 +484,7 @@ function handleCheckout(e) {
         },
         status: 'confirmed'
     };
-    saveOrder(orderNumber);
+    saveOrder(orderNumber, orderData);
     clearCart();
     showNotification('Оплата прошла успешно!', 'success');
     if (typeof renderCartItems === 'function') {
@@ -481,28 +502,11 @@ function generateOrderNumber() {
     return 'HT' + Date.now().toString().slice(-8);
 }
 
-function saveOrder(orderNumber) {
-    if (!currentUser) return;
-    
-    if (!currentUser.bookings) {
-        currentUser.bookings = [];
-    }
-    
-    currentUser.bookings.push({
-        number: orderNumber,
-        date: new Date().toISOString(),
-        items: [...cart],
-        total: getCartTotal(),
-        status: 'confirmed'
-    });
-    
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-}
-
 function renderBookingHistory() {
     const bookingsList = document.getElementById('bookings-list');
     if (!bookingsList) return;
-    if (!currentUser || !currentUser.bookings || currentUser.bookings.length === 0) {
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    if (orders.length === 0) {
         bookingsList.innerHTML = `<div class="text-center py-12 text-gray-500">
             <i class="fas fa-ticket-alt text-4xl mb-4 text-gray-400"></i>
             <p>У вас пока нет заказов</p>
@@ -513,8 +517,8 @@ function renderBookingHistory() {
         document.getElementById('bookings-count').textContent = 0;
         return;
     }
-    document.getElementById('bookings-count').textContent = currentUser.bookings.length;
-    bookingsList.innerHTML = currentUser.bookings.map(order => `
+    document.getElementById('bookings-count').textContent = orders.length;
+    bookingsList.innerHTML = orders.map(order => `
         <div class="border rounded-lg overflow-hidden border-gray-200">
             <div class="bg-gray-50 p-4 flex flex-col md:flex-row md:items-center justify-between">
                 <div>
