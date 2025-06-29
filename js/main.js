@@ -452,6 +452,10 @@ function saveOrder(orderNumber) {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
 }
 
+if (typeof window !== 'undefined') {
+    window.addToCart = addToCart;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { 
         cart, currentUser, addToCart, removeFromCart, updateQuantity, 

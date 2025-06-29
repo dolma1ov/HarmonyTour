@@ -392,6 +392,11 @@ function getToursByCategory(category) {
     return tours.filter(tour => tour.category === category);
 }
 
+if (typeof window !== 'undefined') {
+    window.showTourDetails = showTourDetails;
+    window.addToCart = typeof addToCart !== 'undefined' ? addToCart : () => {};
+}
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { tours, loadTours, renderTours, filterTours, searchTours };
 }
