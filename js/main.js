@@ -508,6 +508,61 @@ function renderBookingHistory() {
     `).join('');
 }
 
+function renderCartItems() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartEmptyMessage = document.getElementById('cart-empty-message');
+    const cartContent = document.getElementById('cart-content');
+    const subtotalElem = document.getElementById('cart-subtotal');
+    const discountElem = document.getElementById('cart-discount');
+    const feeElem = document.getElementById('cart-fee');
+    const totalElem = document.getElementById('cart-total');
+
+    if (!cartItemsContainer) return;
+
+    if (cart.length === 0) {
+        if (cartEmptyMessage) cartEmptyMessage.classList.remove('hidden');
+        if (cartContent) cartContent.classList.add('hidden');
+        if (subtotalElem) subtotalElem.textContent = '0 ₽';
+        if (discountElem) discountElem.textContent = '0 ₽';
+        if (feeElem) feeElem.textContent = '0 ₽';
+        if (totalElem) totalElem.textContent = '0 ₽';
+        return;
+    } else {
+        if (cartEmptyMessage) cartEmptyMessage.classList.add('hidden');
+        if (cartContent) cartContent.classList.remove('hidden');
+    }
+
+    cartItemsContainer.innerHTML = cart.map(item => `
+        <div class="cart-item flex items-center justify-between bg-white rounded-lg shadow p-4">
+            <div>
+                <h3 class="font-semibold text-lg text-gray-900 mb-1">${item.name}</h3>
+                <div class="text-gray-500 text-sm mb-1">${item.duration}</div>
+                <div class="text-gray-500 text-sm mb-1">Категория: ${item.category}</div>
+                <div class="text-gray-500 text-sm">Цена: ${formatPrice(item.price)}</div>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-2">
+                    <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})" class="quantity-btn">-</button>
+                    <span class="mx-2">${item.quantity}</span>
+                    <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})" class="quantity-btn">+</button>
+                </div>
+                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-sm"><i class="fas fa-trash mr-1"></i>Удалить</button>
+            </div>
+        </div>
+    `).join('');
+
+    // Итоги
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = 0; // Можно реализовать промокоды
+    const fee = 0; // Можно добавить сервисный сбор
+    const total = subtotal - discount + fee;
+
+    if (subtotalElem) subtotalElem.textContent = formatPrice(subtotal);
+    if (discountElem) discountElem.textContent = formatPrice(discount);
+    if (feeElem) feeElem.textContent = formatPrice(fee);
+    if (totalElem) totalElem.textContent = formatPrice(total);
+}
+
 if (typeof window !== 'undefined') {
     window.addToCart = addToCart;
 }
