@@ -1,4 +1,3 @@
-// Данные туров
 const tours = [
     {
         id: 1,
@@ -137,20 +136,17 @@ const tours = [
     }
 ];
 
-// Загрузка и отображение туров
 function loadTours() {
     const toursGrid = document.getElementById('tours-grid');
     if (!toursGrid) return;
     
     toursGrid.innerHTML = '<div class="loader"></div>';
     
-    // Имитация загрузки
     setTimeout(() => {
         renderTours(tours);
     }, 1000);
 }
 
-// Отображение туров
 function renderTours(toursToRender) {
     const toursGrid = document.getElementById('tours-grid');
     if (!toursGrid) return;
@@ -168,11 +164,9 @@ function renderTours(toursToRender) {
     
     toursGrid.innerHTML = toursToRender.map(tour => createTourCard(tour)).join('');
     
-    // Добавляем обработчики событий для новых карточек
     setupTourCardEvents();
 }
 
-// Создание карточки тура
 function createTourCard(tour) {
     const imageGradients = {
         italy: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -220,7 +214,6 @@ function createTourCard(tour) {
     `;
 }
 
-// Генерация звездного рейтинга
 function generateStarRating(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
@@ -242,7 +235,6 @@ function generateStarRating(rating) {
     return `<div class="flex items-center">${starsHTML}<span class="ml-1 font-semibold">${rating}</span></div>`;
 }
 
-// Настройка событий для карточек туров
 function setupTourCardEvents() {
     const tourCards = document.querySelectorAll('.tour-card');
     
@@ -259,7 +251,6 @@ function setupTourCardEvents() {
     });
 }
 
-// Показ деталей тура в модальном окне
 function showTourDetails(tourId) {
     const tour = tours.find(t => t.id === tourId);
     if (!tour) return;
@@ -338,51 +329,52 @@ function showTourDetails(tourId) {
     modal.classList.remove('hidden');
 }
 
-// Фильтрация туров
 function filterTours(destination, priceFrom, priceTo) {
     let filteredTours = tours;
     
-    // Фильтр по направлению
     if (destination) {
         filteredTours = filteredTours.filter(tour => tour.destination === destination);
     }
     
-    // Фильтр по цене
-    filteredTours = filteredTours.filter(tour => 
-        tour.price >= priceFrom && tour.price <= priceTo
-    );
+    if (priceFrom) {
+        filteredTours = filteredTours.filter(tour => tour.price >= priceFrom);
+    }
+    
+    if (priceTo) {
+        filteredTours = filteredTours.filter(tour => tour.price <= priceTo);
+    }
     
     renderTours(filteredTours);
     
-    // Показываем результаты поиска
-    const resultsText = filteredTours.length === tours.length 
-        ? 'Показаны все туры' 
-        : `Найдено туров: ${filteredTours.length}`;
-    
-    showSearchResults(resultsText);
+    if (filteredTours.length > 0) {
+        showSearchResults(`Найдено ${filteredTours.length} туров`);
+    } else {
+        showSearchResults('Туры не найдены');
+    }
 }
 
-// Показ результатов поиска
 function showSearchResults(text) {
-    // Удаляем предыдущее сообщение, если есть
-    const existingMessage = document.querySelector('.search-results-message');
+    const toursGrid = document.getElementById('tours-grid');
+    if (!toursGrid) return;
+    
+    const existingMessage = toursGrid.querySelector('.search-result-message');
     if (existingMessage) {
         existingMessage.remove();
     }
     
-    // Создаем новое сообщение
     const message = document.createElement('div');
-    message.className = 'search-results-message text-center py-4 text-gray-600 font-medium';
-    message.textContent = text;
+    message.className = 'search-result-message col-span-full text-center py-4 bg-blue-50 rounded-lg';
+    message.innerHTML = `<p class="text-blue-600 font-medium">${text}</p>`;
     
-    const toursGrid = document.getElementById('tours-grid');
-    if (toursGrid && toursGrid.parentElement) {
-        toursGrid.parentElement.insertBefore(message, toursGrid);
-    }
+    toursGrid.insertBefore(message, toursGrid.firstChild);
 }
 
-// Поиск туров по названию
 function searchTours(query) {
+    if (!query.trim()) {
+        renderTours(tours);
+        return;
+    }
+    
     const filteredTours = tours.filter(tour => 
         tour.name.toLowerCase().includes(query.toLowerCase()) ||
         tour.shortDescription.toLowerCase().includes(query.toLowerCase()) ||
@@ -390,29 +382,16 @@ function searchTours(query) {
     );
     
     renderTours(filteredTours);
-    showSearchResults(`Найдено туров: ${filteredTours.length}`);
 }
 
-// Получение популярных туров
 function getPopularTours(count = 6) {
-    return tours
-        .sort((a, b) => b.rating - a.rating)
-        .slice(0, count);
+    return tours.sort((a, b) => b.rating - a.rating).slice(0, count);
 }
 
-// Получение туров по категории
 function getToursByCategory(category) {
-    return tours.filter(tour => 
-        tour.category.toLowerCase().includes(category.toLowerCase())
-    );
+    return tours.filter(tour => tour.category === category);
 }
 
-// Экспорт функций
-window.loadTours = loadTours;
-window.renderTours = renderTours;
-window.filterTours = filterTours;
-window.showTourDetails = showTourDetails;
-window.searchTours = searchTours;
-window.getPopularTours = getPopularTours;
-window.getToursByCategory = getToursByCategory;
-window.tours = tours;
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { tours, loadTours, renderTours, filterTours, searchTours };
+}

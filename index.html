@@ -11,7 +11,6 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body class="bg-gray-50">
-    <!-- Навигация -->
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -37,7 +36,6 @@
                 </div>
             </div>
         </div>
-        <!-- Мобильное меню -->
         <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 <a href="index.html" class="text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Главная</a>
@@ -47,7 +45,6 @@
         </div>
     </nav>
 
-    <!-- Героический блок -->
     <div class="hero-section text-white py-24 md:py-32 px-4 sm:px-6 lg:px-8">
         <div class="hero-bg"></div>
         <div class="max-w-7xl mx-auto relative z-10">
@@ -59,7 +56,6 @@
         </div>
     </div>
 
-    <!-- Поиск туров -->
     <div class="bg-white py-12 px-4 sm:px-6 lg:px-8 -mt-12 relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="bg-gray-50 rounded-lg shadow-lg p-6">
@@ -92,7 +88,6 @@
         </div>
     </div>
 
-    <!-- Популярные туры -->
     <div class="section bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="section-title">
@@ -100,7 +95,6 @@
                 <p class="text-gray-600">Самые востребованные туры наших клиентов</p>
             </div>
             <div id="tours-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Туры будут загружены через JavaScript -->
             </div>
             <div class="text-center mt-12">
                 <a href="#" class="inline-block border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
@@ -110,7 +104,6 @@
         </div>
     </div>
 
-    <!-- О нас -->
     <div class="section bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -142,7 +135,6 @@
         </div>
     </div>
 
-    <!-- Карта местоположения -->
     <div class="section bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="section-title">
@@ -153,7 +145,6 @@
         </div>
     </div>
 
-    <!-- Отзывы клиентов -->
     <div class="section bg-blue-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="section-title">
@@ -199,7 +190,7 @@
                 </div>
                 <div class="testimonial-card">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-purple-500 text-white flex items-center justify-center mr-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center mr-4">
                             <span>А</span>
                         </div>
                         <div>
@@ -213,101 +204,76 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-600 italic">"Мальдивы - это рай на земле! Спасибо Гармония Тур за организацию медового месяца. Все было идеально, от перелета до бунгало."</p>
+                    <p class="text-gray-600 italic">"Поездка в Японию была мечтой детства. Гармония Тур сделал эту мечту реальностью. Все было идеально организовано!"</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Призыв к действию -->
-    <div class="section bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-6">Готовы к путешествию мечты?</h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">Свяжитесь с нами прямо сейчас и начнем планировать ваше следующее приключение!</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button class="bg-white text-blue-700 hover:bg-gray-100 px-8 py-3 rounded-md font-semibold transition-colors duration-300">
-                    <i class="fas fa-phone mr-2"></i>Позвонить
-                </button>
-                <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-md font-semibold transition-colors duration-300">
-                    <i class="fas fa-envelope mr-2"></i>Написать
-                </button>
-            </div>
+    <div class="bg-blue-600 text-white py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">Готовы к приключениям?</h2>
+            <p class="text-xl mb-8">Присоединяйтесь к тысячам довольных путешественников</p>
+            <button class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-md font-semibold transition-colors duration-300">
+                Начать планирование
+            </button>
         </div>
     </div>
 
-    <!-- Футер -->
-    <footer>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4 text-white">Гармония Тур</h3>
-                    <p class="text-gray-300">Ваш надежный партнер в мире путешествий</p>
+                    <h3 class="text-xl font-bold mb-4">Гармония Тур</h3>
+                    <p class="text-gray-400">Создаем незабываемые путешествия с 2010 года</p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-white">Услуги</h4>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>Туры по России</li>
-                        <li>Зарубежные туры</li>
-                        <li>Экскурсии</li>
-                        <li>Отели</li>
+                    <h4 class="font-semibold mb-4">Услуги</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Туры по Европе</a></li>
+                        <li><a href="#" class="hover:text-white">Экзотические направления</a></li>
+                        <li><a href="#" class="hover:text-white">Круизы</a></li>
+                        <li><a href="#" class="hover:text-white">Бизнес-туры</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-white">Контакты</h4>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><i class="fas fa-phone mr-2"></i>+7 (495) 123-45-67</li>
-                        <li><i class="fas fa-envelope mr-2"></i>info@harmony-tour.ru</li>
-                        <li><i class="fas fa-map-marker-alt mr-2"></i>Москва, ул. Примерная, 123</li>
+                    <h4 class="font-semibold mb-4">Поддержка</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Контакты</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white">Политика возврата</a></li>
+                        <li><a href="#" class="hover:text-white">Условия использования</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-white">Социальные сети</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-facebook text-2xl"></i></a>
-                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
-                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-telegram text-2xl"></i></a>
+                    <h4 class="font-semibold mb-4">Контакты</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p><i class="fas fa-phone mr-2"></i>+7 (999) 123-45-67</p>
+                        <p><i class="fas fa-envelope mr-2"></i>info@harmonytour.ru</p>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i>Москва, ул. Примерная, 123</p>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
                 <p>&copy; 2024 Гармония Тур. Все права защищены.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Модальное окно деталей тура -->
     <div id="tour-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto p-6 relative">
-                <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times text-2xl"></i>
+        <div class="modal-content bg-white rounded-lg shadow-xl max-w-4xl mx-auto mt-20 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Детали тура</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
                 </button>
-                <h3 id="modal-title" class="text-2xl font-bold text-gray-900 mb-6">Детали тура</h3>
-                <div id="modal-content" class="space-y-6">
-                    <!-- Контент будет загружен через JavaScript -->
-                </div>
+            </div>
+            <div id="modal-content">
             </div>
         </div>
     </div>
 
-    <script src="js/main.js"></script>
     <script src="js/tours.js"></script>
-    <script>
-        // Инициализация карты
-        function initializeMap() {
-            const map = L.map('map').setView([56.39082366015565, 38.71543021143129], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            L.marker([56.39082366015565, 38.71543021143129]).addTo(map)
-                .bindPopup('<b>Гармония Тур</b><br>Наше местоположение')
-                .openPopup();
-        }
-
-        // Вызов функции инициализации карты при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeMap();
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>

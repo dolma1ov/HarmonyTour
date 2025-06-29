@@ -1,17 +1,13 @@
-// Основные переменные
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     updateCartCount();
     setupEventListeners();
 });
 
-// Инициализация приложения
 function initializeApp() {
-    // Проверяем текущую страницу и выполняем соответствующие действия
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     
     switch(currentPage) {
@@ -28,23 +24,17 @@ function initializeApp() {
     }
 }
 
-// Инициализация главной страницы
 function initializeHomePage() {
-    // Плавная анимация при скролле
     setupScrollAnimations();
     
-    // Анимация героического блока
     animateHeroSection();
     
-    // Загрузка туров
     if (typeof loadTours === 'function') {
         loadTours();
     }
 }
 
-// Настройка обработчиков событий
 function setupEventListeners() {
-    // Мобильное меню
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
@@ -54,7 +44,6 @@ function setupEventListeners() {
         });
     }
 
-    // Модальное окно
     const modal = document.getElementById('tour-modal');
     const closeModal = document.getElementById('close-modal');
     
@@ -70,13 +59,11 @@ function setupEventListeners() {
         });
     }
 
-    // Поиск туров
     const searchBtn = document.getElementById('search-btn');
     if (searchBtn) {
         searchBtn.addEventListener('click', handleSearch);
     }
 
-    // Фильтры
     const destinationFilter = document.getElementById('destination-filter');
     const priceFrom = document.getElementById('price-from');
     const priceTo = document.getElementById('price-to');
@@ -91,7 +78,6 @@ function setupEventListeners() {
         priceTo.addEventListener('input', debounce(handleSearch, 500));
     }
 
-    // Кнопка "Найти тур" в героическом блоке
     const heroBtn = document.querySelector('.hero-section button');
     if (heroBtn) {
         heroBtn.addEventListener('click', function() {
@@ -102,7 +88,6 @@ function setupEventListeners() {
     }
 }
 
-// Анимации при скролле
 function setupScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -118,7 +103,6 @@ function setupScrollAnimations() {
         });
     }, observerOptions);
 
-    // Наблюдаем за элементами, которые нужно анимировать
     const elementsToAnimate = document.querySelectorAll('.tour-card, .testimonial-card, .section');
     elementsToAnimate.forEach(el => {
         el.style.opacity = '0';
@@ -128,7 +112,6 @@ function setupScrollAnimations() {
     });
 }
 
-// Анимация героического блока
 function animateHeroSection() {
     const heroElements = document.querySelectorAll('.hero-section .animate-fade-in, .hero-section .animate-fade-in-delay, .hero-section .animate-fade-in-delay-2');
     
@@ -140,7 +123,6 @@ function animateHeroSection() {
     });
 }
 
-// Обработка поиска туров
 function handleSearch() {
     const destination = document.getElementById('destination-filter')?.value || '';
     const priceFrom = parseInt(document.getElementById('price-from')?.value) || 0;
@@ -151,7 +133,6 @@ function handleSearch() {
     }
 }
 
-// Debounce функция для оптимизации поиска
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -164,7 +145,6 @@ function debounce(func, wait) {
     };
 }
 
-// Работа с корзиной
 function addToCart(tourId) {
     const tour = tours.find(t => t.id === tourId);
     if (!tour) return;
@@ -233,12 +213,7 @@ function updateCartCount() {
     if (cartCount) {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCount.textContent = totalItems;
-        
-        if (totalItems > 0) {
-            cartCount.classList.add('pulse');
-        } else {
-            cartCount.classList.remove('pulse');
-        }
+        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
     }
 }
 
@@ -246,52 +221,34 @@ function getCartTotal() {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 }
 
-// Работа с пользователем
 function loginUser(userData) {
     currentUser = userData;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    showNotification('Добро пожаловать!', 'success');
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+    showNotification('Вы успешно вошли в систему!', 'success');
 }
 
 function logoutUser() {
     currentUser = null;
     localStorage.removeItem('currentUser');
-    showNotification('Вы вышли из аккаунта', 'success');
+    showNotification('Вы вышли из системы', 'info');
     
     if (window.location.pathname.includes('profile.html')) {
         window.location.href = 'index.html';
     }
 }
 
-// Система уведомлений
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = `notification ${type === 'success' ? 'success-message' : 'error-message'}`;
-    notification.innerHTML = `
-        <div class="flex items-center justify-between">
-            <span>${message}</span>
-            <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    `;
-    
-    notification.style.position = 'fixed';
-    notification.style.top = '20px';
-    notification.style.right = '20px';
-    notification.style.zIndex = '9999';
-    notification.style.minWidth = '300px';
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm ${type === 'success' ? 'success-message' : type === 'error' ? 'error-message' : 'bg-blue-500 text-white'}`;
+    notification.textContent = message;
     
     document.body.appendChild(notification);
     
     setTimeout(() => {
-        if (notification.parentElement) {
-            notification.remove();
-        }
-    }, 5000);
+        notification.remove();
+    }, 3000);
 }
 
-// Утилиты
 function formatPrice(price) {
     return new Intl.NumberFormat('ru-RU', {
         style: 'currency',
@@ -301,61 +258,136 @@ function formatPrice(price) {
 }
 
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return new Date(dateString).toLocaleDateString('ru-RU', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
 }
 
-// Инициализация страницы профиля
 function initializeProfilePage() {
     if (!currentUser) {
-        // Создаем демо-пользователя для показа
         currentUser = {
-            id: 1,
-            name: 'Анна Петрова',
-            email: 'anna@example.com',
+            name: 'Александр Петров',
+            email: 'alex@example.com',
             phone: '+7 (999) 123-45-67',
-            avatar: 'А',
-            memberSince: '2023-01-15',
-            preferences: {
-                notifications: true,
-                newsletter: true,
-                smsAlerts: false
-            }
+            registered: '2023-01-15',
+            bookings: [],
+            favorites: []
         };
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
     
+    updateProfileDisplay();
     setupProfileTabs();
-    renderProfileInfo();
-    renderBookingHistory();
-    renderFavorites();
+    setupProfileEvents();
 }
 
-// Настройка табов профиля
 function setupProfileTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const targetTab = this.getAttribute('data-tab');
+            const targetTab = this.dataset.tab;
             
-            // Убираем активный класс у всех табов
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
             
-            // Добавляем активный класс к выбранному табу
             this.classList.add('active');
             document.getElementById(targetTab).classList.add('active');
         });
     });
 }
 
-// Инициализация страницы корзины
+function setupProfileEvents() {
+    const editProfileBtn = document.getElementById('edit-profile-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const editModal = document.getElementById('edit-profile-modal');
+    const closeEditModal = document.getElementById('close-edit-modal');
+    const cancelEdit = document.getElementById('cancel-edit');
+    const editForm = document.getElementById('edit-profile-form');
+    
+    if (editProfileBtn && editModal) {
+        editProfileBtn.addEventListener('click', function() {
+            fillEditForm();
+            editModal.classList.remove('hidden');
+        });
+    }
+    
+    if (closeEditModal && editModal) {
+        closeEditModal.addEventListener('click', function() {
+            editModal.classList.add('hidden');
+        });
+    }
+    
+    if (cancelEdit && editModal) {
+        cancelEdit.addEventListener('click', function() {
+            editModal.classList.add('hidden');
+        });
+    }
+    
+    if (editForm) {
+        editForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveProfileChanges();
+            editModal.classList.add('hidden');
+        });
+    }
+    
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logoutUser);
+    }
+}
+
+function updateProfileDisplay() {
+    if (!currentUser) return;
+    
+    const avatar = document.getElementById('user-avatar');
+    const userName = document.getElementById('user-name');
+    const userEmail = document.getElementById('user-email');
+    const displayName = document.getElementById('display-name');
+    const displayEmail = document.getElementById('display-email');
+    const displayPhone = document.getElementById('display-phone');
+    const displayRegistered = document.getElementById('display-registered');
+    
+    if (avatar) avatar.textContent = currentUser.name.charAt(0);
+    if (userName) userName.textContent = currentUser.name;
+    if (userEmail) userEmail.textContent = currentUser.email;
+    if (displayName) displayName.textContent = currentUser.name;
+    if (displayEmail) displayEmail.textContent = currentUser.email;
+    if (displayPhone) displayPhone.textContent = currentUser.phone;
+    if (displayRegistered) displayRegistered.textContent = formatDate(currentUser.registered);
+}
+
+function fillEditForm() {
+    if (!currentUser) return;
+    
+    const nameInput = document.getElementById('edit-name');
+    const emailInput = document.getElementById('edit-email');
+    const phoneInput = document.getElementById('edit-phone');
+    
+    if (nameInput) nameInput.value = currentUser.name;
+    if (emailInput) emailInput.value = currentUser.email;
+    if (phoneInput) phoneInput.value = currentUser.phone;
+}
+
+function saveProfileChanges() {
+    const nameInput = document.getElementById('edit-name');
+    const emailInput = document.getElementById('edit-email');
+    const phoneInput = document.getElementById('edit-phone');
+    
+    if (nameInput && emailInput && phoneInput) {
+        currentUser.name = nameInput.value;
+        currentUser.email = emailInput.value;
+        currentUser.phone = phoneInput.value;
+        
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateProfileDisplay();
+        showNotification('Профиль успешно обновлен!', 'success');
+    }
+}
+
 function initializeCartPage() {
     if (typeof renderCartItems === 'function') {
         renderCartItems();
@@ -363,7 +395,6 @@ function initializeCartPage() {
     setupCheckoutForm();
 }
 
-// Настройка формы оформления заказа
 function setupCheckoutForm() {
     const checkoutForm = document.getElementById('checkout-form');
     if (checkoutForm) {
@@ -374,55 +405,56 @@ function setupCheckoutForm() {
 function handleCheckout(e) {
     e.preventDefault();
     
-    if (cart.length === 0) {
-        showNotification('Корзина пуста!', 'error');
-        return;
-    }
+    const orderNumber = generateOrderNumber();
+    const orderData = {
+        number: orderNumber,
+        date: new Date().toISOString(),
+        items: [...cart],
+        total: getCartTotal(),
+        customer: {
+            name: document.getElementById('checkout-name').value,
+            surname: document.getElementById('checkout-surname').value,
+            email: document.getElementById('checkout-email').value,
+            phone: document.getElementById('checkout-phone').value
+        },
+        status: 'confirmed'
+    };
     
-    // Имитация обработки заказа
-    showNotification('Обрабатываем ваш заказ...', 'info');
+    saveOrder(orderNumber);
+    clearCart();
+    
+    showNotification(`Заказ ${orderNumber} успешно оформлен!`, 'success');
     
     setTimeout(() => {
-        const orderNumber = generateOrderNumber();
-        showNotification(`Заказ №${orderNumber} успешно оформлен! Наш менеджер свяжется с вами в течение часа.`, 'success');
-        
-        // Сохраняем заказ в историю
-        saveOrder(orderNumber);
-        
-        // Очищаем корзину
-        clearCart();
-        
-        // Перенаправляем на страницу профиля
-        setTimeout(() => {
-            window.location.href = 'profile.html';
-        }, 3000);
+        window.location.href = 'profile.html';
     }, 2000);
 }
 
 function generateOrderNumber() {
-    return Date.now().toString().slice(-6);
+    return 'HT' + Date.now().toString().slice(-8);
 }
 
 function saveOrder(orderNumber) {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    const newOrder = {
-        id: orderNumber,
+    if (!currentUser) return;
+    
+    if (!currentUser.bookings) {
+        currentUser.bookings = [];
+    }
+    
+    currentUser.bookings.push({
+        number: orderNumber,
+        date: new Date().toISOString(),
         items: [...cart],
         total: getCartTotal(),
-        status: 'processing',
-        date: new Date().toISOString(),
-        customer: currentUser || { name: 'Гость' }
-    };
+        status: 'confirmed'
+    });
     
-    orders.push(newOrder);
-    localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
 }
 
-// Экспорт функций для использования в других файлах
-window.addToCart = addToCart;
-window.removeFromCart = removeFromCart;
-window.updateQuantity = updateQuantity;
-window.clearCart = clearCart;
-window.showNotification = showNotification;
-window.formatPrice = formatPrice;
-window.formatDate = formatDate;
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { 
+        cart, currentUser, addToCart, removeFromCart, updateQuantity, 
+        clearCart, getCartTotal, loginUser, logoutUser, showNotification 
+    };
+}

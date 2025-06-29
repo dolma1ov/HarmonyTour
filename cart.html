@@ -9,7 +9,6 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50">
-    <!-- Навигация -->
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -35,7 +34,6 @@
                 </div>
             </div>
         </div>
-        <!-- Мобильное меню -->
         <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 <a href="index.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Главная</a>
@@ -45,7 +43,6 @@
         </div>
     </nav>
 
-    <!-- Основной контент -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-16">
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Ваша корзина</h1>
@@ -67,7 +64,6 @@
         <div id="cart-content" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2">
                 <div id="cart-items" class="space-y-4">
-                    <!-- Элементы корзины будут добавлены через JavaScript -->
                 </div>
                 
                 <div class="flex justify-between mt-6">
@@ -127,7 +123,6 @@
         </div>
     </div>
 
-    <!-- Футер -->
     <footer class="bg-gray-900 text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -167,7 +162,6 @@
         </div>
     </footer>
 
-    <!-- Модальное окно оформления заказа -->
     <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
         <div class="flex items-center justify-center min-h-screen p-4">
             <div class="bg-white rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto">
@@ -204,86 +198,28 @@
                         <div>
                             <h4 class="font-semibold text-lg mb-4">2. Способ оплаты</h4>
                             <div class="space-y-3">
-                                <div class="flex items-center">
-                                    <input type="radio" id="payment-card" name="payment-method" value="card" class="mr-2" checked>
-                                    <label for="payment-card" class="flex-1 flex items-center justify-between cursor-pointer">
-                                        <span>Кредитная/дебетовая карта</span>
-                                        <span class="text-gray-500 text-sm">Visa, MasterCard, Мир</span>
-                                    </label>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="radio" id="payment-bank" name="payment-method" value="bank" class="mr-2">
-                                    <label for="payment-bank" class="flex-1 flex items-center justify-between cursor-pointer">
-                                        <span>Банковский перевод</span>
-                                        <span class="text-gray-500 text-sm">Через СБП</span>
-                                    </label>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="radio" id="payment-installments" name="payment-method" value="installments" class="mr-2">
-                                    <label for="payment-installments" class="flex-1 flex items-center justify-between cursor-pointer">
-                                        <span>Оплата в рассрочку</span>
-                                        <span class="text-gray-500 text-sm">Без процентов</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div id="card-details" class="mt-4 space-y-3 border border-gray-200 rounded-lg p-4">
-                                <p class="text-gray-600 text-sm mb-3">Для демонстрации вы можете ввести тестовые данные карты. Реальные платежи не обрабатываются.</p>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Номер карты</label>
-                                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                </div>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Срок действия</label>
-                                        <input type="text" id="card-expiry" placeholder="MM/YY" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">CVC/CVV</label>
-                                        <input type="text" id="card-cvc" placeholder="123" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    </div>
-                                </div>
+                                <label class="flex items-center">
+                                    <input type="radio" name="payment" value="card" class="mr-3" checked>
+                                    <span>Банковская карта</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="payment" value="cash" class="mr-3">
+                                    <span>Наличные при получении</span>
+                                </label>
                             </div>
                         </div>
                         
                         <div>
-                            <h4 class="font-semibold text-lg mb-4">3. Итог заказа</h4>
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <div class="space-y-3 border-b border-gray-200 pb-3 mb-3">
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Подитог:</span>
-                                        <span id="checkout-subtotal" class="font-medium">0 ₽</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Скидка:</span>
-                                        <span id="checkout-discount" class="font-medium text-green-600">0 ₽</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Сервисный сбор:</span>
-                                        <span id="checkout-fee" class="font-medium">0 ₽</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between text-lg font-bold text-gray-900">
-                                    <span>Итого к оплате:</span>
-                                    <span id="checkout-total">0 ₽</span>
-                                </div>
-                            </div>
+                            <h4 class="font-semibold text-lg mb-4">3. Комментарий к заказу</h4>
+                            <textarea id="checkout-comment" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Дополнительные пожелания или требования"></textarea>
                         </div>
                         
-                        <div>
-                            <h4 class="font-semibold text-lg mb-4">4. Подтверждение</h4>
-                            <div class="flex items-start">
-                                <input type="checkbox" id="terms-agreement" class="mt-1 mr-3" required>
-                                <label for="terms-agreement" class="text-gray-700 text-sm">Я подтверждаю, что прочитал и согласен с <a href="#" class="text-blue-600 hover:underline">условиями бронирования</a> и <a href="#" class="text-blue-600 hover:underline">политикой конфиденциальности</a>.</label>
-                            </div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <button type="button" id="cancel-checkout" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition-colors duration-300">
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" id="cancel-checkout" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-md transition-colors duration-300">
                                 Отмена
                             </button>
-                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
-                                <i class="fas fa-check mr-2"></i>Подтвердить и оплатить
+                            <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md transition-colors duration-300">
+                                Подтвердить заказ
                             </button>
                         </div>
                     </form>
@@ -293,172 +229,5 @@
     </div>
 
     <script src="js/main.js"></script>
-    <script src="js/tours.js"></script>
-    <script>
-        // Отображение элементов корзины
-        function renderCartItems() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const emptyCartMessage = document.getElementById('cart-empty-message');
-            const cartContent = document.getElementById('cart-content');
-            
-            if (!cartItemsContainer || !emptyCartMessage || !cartContent) return;
-            
-            if (cart.length === 0) {
-                emptyCartMessage.classList.remove('hidden');
-                cartContent.classList.add('hidden');
-                return;
-            }
-            
-            emptyCartMessage.classList.add('hidden');
-            cartContent.classList.remove('hidden');
-            
-            cartItemsContainer.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900">${item.name}</h3>
-                            <p class="text-gray-600">${item.shortDescription || item.duration}</p>
-                        </div>
-                        <div class="mt-2 md:mt-0 text-right">
-                            <div class="text-lg font-bold text-gray-900">${formatPrice(item.price * item.quantity)}</div>
-                            <div class="text-sm text-gray-500">${formatPrice(item.price)} x ${item.quantity}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col md:flex-row md:items-center justify-between">
-                        <div class="flex items-center quantity-controls">
-                            <span class="text-gray-700 mr-3">Количество участников:</span>
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span class="text-gray-900 font-medium">${item.quantity}</span>
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <button class="mt-3 md:mt-0 text-red-600 hover:text-red-800" onclick="removeFromCart(${item.id})">
-                            <i class="fas fa-trash mr-1"></i>Удалить
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-            
-            updateCartSummary();
-        }
-        
-        // Обновление итогов корзины
-        function updateCartSummary() {
-            const subtotal = getCartTotal();
-            const discount = 0; // Для демонстрации
-            const fee = 0; // Для демонстрации
-            const total = subtotal - discount + fee;
-            
-            document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
-            document.getElementById('cart-discount').textContent = formatPrice(discount);
-            document.getElementById('cart-fee').textContent = formatPrice(fee);
-            document.getElementById('cart-total').textContent = formatPrice(total);
-            
-            // Обновляем данные в модальном окне оформления
-            document.getElementById('checkout-subtotal').textContent = formatPrice(subtotal);
-            document.getElementById('checkout-discount').textContent = formatPrice(discount);
-            document.getElementById('checkout-fee').textContent = formatPrice(fee);
-            document.getElementById('checkout-total').textContent = formatPrice(total);
-        }
-        
-        // Настройка кнопки очистки корзины
-        function setupClearCartButton() {
-            const clearBtn = document.getElementById('clear-cart-btn');
-            if (clearBtn) {
-                clearBtn.addEventListener('click', function() {
-                    if (confirm('Вы уверены, что хотите очистить корзину? Все добавленные туры будут удалены.')) {
-                        clearCart();
-                    }
-                });
-            }
-        }
-        
-        // Настройка модального окна оформления заказа
-        function setupCheckoutModal() {
-            const checkoutBtn = document.getElementById('checkout-btn');
-            const modal = document.getElementById('checkout-modal');
-            const closeBtn = document.getElementById('close-checkout-modal');
-            const cancelBtn = document.getElementById('cancel-checkout');
-            
-            if (checkoutBtn && modal && closeBtn && cancelBtn) {
-                checkoutBtn.addEventListener('click', function() {
-                    if (cart.length === 0) {
-                        showNotification('Корзина пуста! Добавьте туры перед оформлением заказа.', 'error');
-                        return;
-                    }
-                    
-                    // Заполняем форму данными пользователя, если они есть
-                    if (currentUser) {
-                        document.getElementById('checkout-name').value = currentUser.name?.split(' ')[0] || '';
-                        document.getElementById('checkout-surname').value = currentUser.name?.split(' ')[1] || '';
-                        document.getElementById('checkout-email').value = currentUser.email || '';
-                        document.getElementById('checkout-phone').value = currentUser.phone || '';
-                    }
-                    
-                    modal.classList.remove('hidden');
-                });
-                
-                closeBtn.addEventListener('click', function() {
-                    modal.classList.add('hidden');
-                });
-                
-                cancelBtn.addEventListener('click', function() {
-                    modal.classList.add('hidden');
-                });
-                
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        modal.classList.add('hidden');
-                    }
-                });
-            }
-        }
-        
-        // Настройка переключения способов оплаты
-        function setupPaymentMethods() {
-            const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
-            const cardDetails = document.getElementById('card-details');
-            
-            if (paymentMethods && cardDetails) {
-                paymentMethods.forEach(method => {
-                    method.addEventListener('change', function() {
-                        if (this.value === 'card') {
-                            cardDetails.classList.remove('hidden');
-                        } else {
-                            cardDetails.classList.add('hidden');
-                        }
-                    });
-                });
-            }
-        }
-        
-        // Настройка применения промокода
-        function setupPromoCode() {
-            const applyBtn = document.getElementById('apply-promo-btn');
-            if (applyBtn) {
-                applyBtn.addEventListener('click', function() {
-                    const promoCode = document.getElementById('promo-code').value;
-                    if (promoCode) {
-                        showNotification('Промокод применен! Для демонстрации скидка не начисляется.', 'success');
-                    } else {
-                        showNotification('Пожалуйста, введите промокод', 'error');
-                    }
-                });
-            }
-        }
-        
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            renderCartItems();
-            setupClearCartButton();
-            setupCheckoutModal();
-            setupPaymentMethods();
-            setupPromoCode();
-        });
-    </script>
 </body>
 </html>
