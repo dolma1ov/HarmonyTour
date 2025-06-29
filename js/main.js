@@ -3,7 +3,7 @@ let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 let tours = [];
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Инициализация туров
+    // Инициализация туров из tours.js
     if (typeof window !== 'undefined' && window.tours) {
         tours = window.tours;
     }
@@ -161,7 +161,8 @@ function debounce(func, wait) {
 }
 
 function addToCart(tourId) {
-    const tour = tours.find(t => t.id === tourId);
+    const toursArray = window.tours || tours;
+    const tour = toursArray.find(t => t.id === tourId);
     if (!tour) return;
 
     const existingItem = cart.find(item => item.id === tourId);
