@@ -286,8 +286,8 @@ function initializeProfilePage() {
         };
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
-    
     updateProfileDisplay();
+    renderBookingHistory();
     setupProfileTabs();
     setupProfileEvents();
 }
@@ -459,6 +459,53 @@ function saveOrder(orderNumber) {
     });
     
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+}
+
+function renderBookingHistory() {
+    const bookingsList = document.getElementById('bookings-list');
+    if (!bookingsList) return;
+    if (!currentUser || !currentUser.bookings || currentUser.bookings.length === 0) {
+        bookingsList.innerHTML = `<div class="text-center py-12 text-gray-500">
+            <i class="fas fa-ticket-alt text-4xl mb-4 text-gray-400"></i>
+            <p>У вас пока нет заказов</p>
+            <a href="index.html" class="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300">
+                <i class="fas fa-search mr-2"></i>Найти тур
+            </a>
+        </div>`;
+        document.getElementById('bookings-count').textContent = 0;
+        return;
+    }
+    document.getElementById('bookings-count').textContent = currentUser.bookings.length;
+    bookingsList.innerHTML = currentUser.bookings.map(order => `
+        <div class="border rounded-lg overflow-hidden border-gray-200">
+            <div class="bg-gray-50 p-4 flex flex-col md:flex-row md:items-center justify-between">
+                <div>
+                    <h3 class="font-semibold text-gray-900">Заказ №${order.number}</h3>
+                    <p class="text-gray-600 text-sm">Дата: ${formatDate(order.date)}</p>
+                </div>
+                <div class="mt-2 md:mt-0">
+                    <span class="inline-block px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">
+                        ${order.status === 'confirmed' ? 'В обработке' : order.status}
+                    </span>
+                    <div class="text-lg font-bold text-gray-900 mt-1">${formatPrice(order.total)}</div>
+                </div>
+            </div>
+            <div class="p-4 space-y-3">
+                ${order.items.map(item => `
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="font-medium">${item.name}</h4>
+                            <p class="text-sm text-gray-500">${item.duration}</p>
+                        </div>
+                        <div class="text-right">
+                            <div>${formatPrice(item.price)}</div>
+                            <div class="text-sm text-gray-500">x${item.quantity}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
 }
 
 if (typeof window !== 'undefined') {
