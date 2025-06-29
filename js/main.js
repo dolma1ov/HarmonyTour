@@ -2,11 +2,6 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 let tours = [];
 
-// Импорт туров из tours.js
-if (typeof window !== 'undefined' && window.tours) {
-    tours = window.tours;
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация туров
     if (typeof window !== 'undefined' && window.tours) {
@@ -618,7 +613,8 @@ function renderCartItems() {
 }
 
 function addToFavorites(tourId) {
-    const tour = tours.find(t => t.id === tourId);
+    const toursArray = window.tours || tours;
+    const tour = toursArray.find(t => t.id === tourId);
     if (!tour) return;
 
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
