@@ -413,7 +413,6 @@ function setupCheckoutForm() {
 
 function handleCheckout(e) {
     e.preventDefault();
-    
     const orderNumber = generateOrderNumber();
     const orderData = {
         number: orderNumber,
@@ -428,15 +427,12 @@ function handleCheckout(e) {
         },
         status: 'confirmed'
     };
-    
     saveOrder(orderNumber);
     clearCart();
-    
-    showNotification(`Заказ ${orderNumber} успешно оформлен!`, 'success');
-    
-    setTimeout(() => {
-        window.location.href = 'profile.html';
-    }, 2000);
+    showNotification('Оплата прошла успешно!', 'success');
+    if (typeof renderCartItems === 'function') {
+        renderCartItems();
+    }
 }
 
 function generateOrderNumber() {
