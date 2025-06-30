@@ -1,10 +1,14 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+let appliedPromo = localStorage.getItem('appliedPromo') || '';
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     updateCartCount();
     setupEventListeners();
+    if (window.location.pathname.includes('cart.html')) {
+        setupPromoCode();
+    }
 });
 
 function initializeApp() {
@@ -207,7 +211,8 @@ function clearCart() {
     cart = [];
     saveCart();
     updateCartCount();
-    
+    appliedPromo = '';
+    localStorage.removeItem('appliedPromo');
     if (typeof renderCartItems === 'function') {
         renderCartItems();
     }
@@ -402,8 +407,30 @@ function initializeCartPage() {
     if (typeof renderCartItems === 'function') {
         renderCartItems();
     }
+    setupPromoCode();
     setupCheckoutForm();
     setupCheckoutModalEvents();
+}
+
+function setupPromoCode() {
+    const promoInput = document.getElementById('promo-code');
+    const applyBtn = document.getElementById('apply-promo-btn');
+    if (promoInput && applyBtn) {
+        promoInput.value = appliedPromo;
+        applyBtn.addEventListener('click', function() {
+            const code = promoInput.value.trim();
+            if (code.toLowerCase() === 'dolma1ov') {
+                appliedPromo = 'dolma1ov';
+                localStorage.setItem('appliedPromo', appliedPromo);
+                showNotification('Промокод применён! Скидка 10%', 'success');
+            } else {
+                appliedPromo = '';
+                localStorage.removeItem('appliedPromo');
+                showNotification('Промокод не найден', 'error');
+            }
+            renderCartItems();
+        });
+    }
 }
 
 function setupCheckoutForm() {
@@ -437,7 +464,6 @@ function setupCheckoutModalEvents() {
             document.body.classList.remove('modal-open');
         });
     }
-    // Закрытие по клику вне окна
     if (checkoutModal) {
         checkoutModal.addEventListener('click', function(e) {
             if (e.target === checkoutModal) {
@@ -453,10 +479,8 @@ function saveOrder(orderNumber, orderData) {
     if (!currentUser.bookings) {
         currentUser.bookings = [];
     }
-    // Добавить заказ в профиль пользователя
     currentUser.bookings.push(orderData);
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    // Добавить заказ в глобальный массив orders
     let orders = JSON.parse(localStorage.getItem('orders')) || [];
     orders.push({
         ...orderData,
@@ -491,7 +515,6 @@ function handleCheckout(e) {
     if (typeof renderCartItems === 'function') {
         renderCartItems();
     }
-    // Закрыть модальное окно после оплаты
     const checkoutModal = document.getElementById('checkout-modal');
     if (checkoutModal) {
         checkoutModal.classList.add('hidden');
@@ -594,10 +617,12 @@ function renderCartItems() {
         </div>
     `).join('');
 
-    // Итоги
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = 0; // Можно реализовать промокоды
-    const fee = 0; // Можно добавить сервисный сбор
+    let discount = 0;
+    if (appliedPromo === 'dolma1ov') {
+        discount = Math.round(subtotal * 0.10);
+    }
+    const fee = 0;
     const total = subtotal - discount + fee;
 
     if (subtotalElem) subtotalElem.textContent = formatPrice(subtotal);
@@ -607,7 +632,6 @@ function renderCartItems() {
 }
 
 function addToFavorites(tourId) {
-    // Получаем тур из разных возможных источников
     let tour = null;
     if (window.tours && window.tours.length > 0) {
         tour = window.tours.find(t => t.id === tourId);
