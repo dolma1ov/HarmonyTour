@@ -284,9 +284,9 @@
                 <div>
                     <h4 class="font-semibold mb-4">Контакты</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-phone mr-2"></i>89190080046</li>
+                        <li><i class="fas fa-phone mr-2"></i>8 (919)-008-00-46</li>
                         <li><i class="fas fa-envelope mr-2"></i>garmoniya-tur@mail.ru</li>
-                        <li><i class="fas fa-map-marker-alt mr-2"></i>Александров ул красные пеерулок дом 10</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>Александров, ул. Красный переулок, д. 10</li>
                     </ul>
                 </div>
                 <div>
@@ -362,7 +362,6 @@
     <script src="js/main.js"></script>
     <script src="js/tours.js"></script>
     <script>
-        // Отображение информации о пользователе
         function renderProfileInfo() {
             if (!currentUser) return;
             
@@ -377,13 +376,11 @@
             
             document.getElementById('member-since').textContent = new Date(currentUser.memberSince).getFullYear() || '2023';
             
-            // Настройка переключателей уведомлений
             document.getElementById('email-notifications').checked = currentUser.preferences?.notifications || false;
             document.getElementById('newsletter').checked = currentUser.preferences?.newsletter || false;
             document.getElementById('sms-alerts').checked = currentUser.preferences?.smsAlerts || false;
         }
         
-        // Отображение истории заказов
         function renderBookingHistory() {
             const orders = JSON.parse(localStorage.getItem('orders')) || [];
             const bookingsList = document.getElementById('bookings-list');
@@ -433,9 +430,7 @@
             `).join('');
         }
         
-        // Отображение избранных туров
         function renderFavorites() {
-            // Для демонстрации, так как у нас нет системы избранного
             const favoritesList = document.getElementById('favorites-list');
             if (!favoritesList) return;
             
@@ -456,7 +451,6 @@
             setupTourCardEvents();
         }
         
-        // Показ деталей заказа
         function showOrderDetails(orderId) {
             const orders = JSON.parse(localStorage.getItem('orders')) || [];
             const order = orders.find(o => o.id === orderId);
@@ -547,7 +541,6 @@
             modal.classList.remove('hidden');
         }
         
-        // Настройка модального окна редактирования
         function setupEditProfileModal() {
             const editBtn = document.getElementById('edit-profile-btn');
             const modal = document.getElementById('edit-profile-modal');
@@ -557,7 +550,6 @@
             
             if (editBtn && modal && closeBtn && cancelBtn && form) {
                 editBtn.addEventListener('click', function() {
-                    // Заполняем форму текущими данными
                     document.getElementById('edit-name').value = currentUser?.name || '';
                     document.getElementById('edit-email').value = currentUser?.email || '';
                     document.getElementById('edit-phone').value = currentUser?.phone || '';
@@ -581,8 +573,6 @@
                 
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    
-                    // Обновляем данные пользователя
                     currentUser.name = document.getElementById('edit-name').value;
                     currentUser.email = document.getElementById('edit-email').value;
                     currentUser.phone = document.getElementById('edit-phone').value;
@@ -597,7 +587,6 @@
             }
         }
         
-        // Настройка сохранения настроек
         function setupSettingsSave() {
             const saveBtn = document.getElementById('save-settings-btn');
             if (saveBtn) {
@@ -616,7 +605,6 @@
             }
         }
         
-        // Настройка выхода из аккаунта
         function setupLogout() {
             const logoutBtn = document.getElementById('logout-btn');
             if (logoutBtn) {
@@ -626,7 +614,6 @@
             }
         }
         
-        // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             setupEditProfileModal();
             setupSettingsSave();

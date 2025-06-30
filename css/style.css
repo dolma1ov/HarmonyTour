@@ -1,4 +1,4 @@
-/* Основные стили */
+
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +17,6 @@ body.modal-open {
     width: 100%;
 }
 
-/* Анимации */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -63,7 +62,7 @@ body.modal-open {
     animation: fadeIn 1s ease-out 0.6s both;
 }
 
-/* Героический блок */
+
 .hero-section {
     position: relative;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -102,7 +101,7 @@ body.modal-open {
     }
 }
 
-/* Кнопки */
+
 .btn-primary {
     background: linear-gradient(45deg, #ff6b6b, #ffa726);
     border: none;
@@ -121,7 +120,7 @@ body.modal-open {
     box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
 }
 
-/* Карточки туров */
+
 .tour-card {
     background: white;
     border-radius: 15px;
@@ -175,7 +174,6 @@ body.modal-open {
     margin-bottom: 10px;
 }
 
-/* Навигация */
 nav {
     backdrop-filter: blur(10px);
     background: rgba(255, 255, 255, 0.95);
@@ -202,7 +200,7 @@ nav {
     width: 100%;
 }
 
-/* Формы */
+
 .form-input {
     border: 2px solid #e5e7eb;
     border-radius: 10px;
@@ -217,7 +215,7 @@ nav {
     outline: none;
 }
 
-/* Секции */
+
 .section {
     padding: 80px 0;
 }
@@ -237,7 +235,7 @@ nav {
     background-clip: text;
 }
 
-/* Отзывы */
+
 .testimonial-card {
     background: white;
     border-radius: 15px;
@@ -263,7 +261,7 @@ nav {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Модальное окно */
+
 .modal {
     backdrop-filter: blur(5px);
     overflow-y: auto;
@@ -277,12 +275,12 @@ nav {
     margin: auto;
 }
 
-/* Футер */
+
 footer {
     background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
 }
 
-/* Загрузчик */
+
 .loader {
     border: 3px solid #f3f3f3;
     border-top: 3px solid #3b82f6;
@@ -298,7 +296,7 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
-/* Адаптивность */
+
 @media (max-width: 768px) {
     .hero-section h1 {
         font-size: 2.5rem !important;
@@ -339,12 +337,11 @@ footer {
     }
 }
 
-/* Плавные переходы для всех элементов */
+
 * {
     transition: all 0.3s ease;
 }
 
-/* Кастомный скроллбар */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -362,7 +359,7 @@ footer {
     background: linear-gradient(45deg, #2563eb, #7c3aed);
 }
 
-/* Дополнительные стили для интерактивности */
+
 .interactive-element {
     cursor: pointer;
     user-select: none;
@@ -381,7 +378,7 @@ footer {
     }
 }
 
-/* Стили для успешных действий */
+
 .success-message {
     background: linear-gradient(45deg, #10b981, #34d399);
     color: white;
@@ -400,7 +397,7 @@ footer {
     animation: slideInRight 0.5s ease-out;
 }
 
-/* Стили для корзины */
+
 .cart-item {
     background: white;
     border-radius: 12px;
@@ -440,7 +437,7 @@ footer {
     transform: scale(1.1);
 }
 
-/* Профиль пользователя */
+
 .profile-section {
     background: white;
     border-radius: 15px;
